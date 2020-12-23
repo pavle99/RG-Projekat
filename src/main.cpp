@@ -304,8 +304,7 @@ void DrawImGui(ProgramState *programState) {
     ImGui_ImplOpenGL3_NewFrame();
     ImGui_ImplGlfw_NewFrame();
     ImGui::NewFrame();
-
-
+    
     {
         static float f = 0.0f;
         ImGui::Begin("Hello window");

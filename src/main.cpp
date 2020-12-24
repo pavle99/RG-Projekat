@@ -57,7 +57,7 @@ struct ProgramState {
     Camera camera;
     bool CameraMouseMovementUpdateEnabled = true;
     glm::vec3 backpackPosition = glm::vec3(0.0f);
-    float backpackScale = 0.3f;
+    float backpackScale = 1.0f;
     PointLight pointLight;
     ProgramState()
             : camera(glm::vec3(-7.0f, 10.0f, 46.0f)) {}
@@ -165,7 +165,7 @@ int main() {
 
     // load models
     // -----------
-    Model ourModel("resources/objects/OBJ/Chess Board Simple.obj");
+    Model ourModel("resources/objects/10586_Chess_Board_v2_L3.123c55ffe1d7-364e-4d98-be32-5ebb4518d6ef/10586_Chess Board_v2_Iterations-2.obj");
     ourModel.SetShaderTextureNamePrefix("material.");
 
     PointLight& pointLight = programState->pointLight;

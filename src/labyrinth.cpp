@@ -1,0 +1,1 @@
+#include "labyrinth.h"

@@ -42,7 +42,7 @@ include_directories(${CMAKE_BINARY_DIR}/configuration)
 
 include_directories(include/)
 add_executable(${PROJECT_NAME}
-        ${SOURCES})
+        ${SOURCES} include/texture.h src/texture.cpp include/resource_manager.h src/resource_manager.cpp include/model_renderer_hero.h src/model_renderer_hero.cpp include/cube_renderer.h src/cube_renderer.cpp include/labyrinth.h src/labyrinth.cpp include/labyrinth_level.h src/labyrinth_level.cpp include/cube.h src/cube.cpp)
 
 target_link_libraries(${PROJECT_NAME} ${LIBS})
 

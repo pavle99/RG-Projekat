@@ -3,8 +3,8 @@
 #define PROJECT_BASE_MODEL_RENDERER_HERO_H
 
 #include <learnopengl/shader_m.h>
-#include <learnopengl/model.h>
 #include <learnopengl/camera.h>
+#include <learnopengl/model.h>
 
 //class that renders the character we control in the labyrinth, TODO better name?
 

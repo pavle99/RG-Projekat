@@ -1,9 +1,8 @@
 #include "model_renderer_hero.h"
-#include "learnopengl/shader_m.h"
 
 
 ModelRendererHero::ModelRendererHero(Shader shader, Camera &camera)
-:camera(camera)
+        :camera(camera)
 {
     this->shader = shader;
 }

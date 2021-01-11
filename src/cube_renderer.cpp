@@ -5,7 +5,7 @@
 
 
 CubeRenderer::CubeRenderer(Shader shader, Camera& cam)
-:camera(cam)
+        :camera(cam)
 {
     this->shader = shader;
     this->init();
@@ -83,7 +83,7 @@ void CubeRenderer::init() {
 }
 
 void CubeRenderer::Draw(std::vector<glm::vec3> pointLightPositions, Texture2D diffuse, Texture2D specular,
-                          glm::vec3 position, glm::vec3 size, float rotation, glm::vec3 color, bool alpha) {
+                        glm::vec3 position, glm::vec3 size, float rotation, glm::vec3 color, bool alpha) {
     glActiveTexture(GL_TEXTURE0);
     diffuse.Bind();
 
@@ -124,7 +124,6 @@ void CubeRenderer::Draw(std::vector<glm::vec3> pointLightPositions, Texture2D di
     view = this->camera.GetViewMatrix();
     this->shader.setMat4("view", view);
 
-    //T -> R -> S
     model = glm::translate(model , position);
     model = glm::rotate(model, glm::radians(rotation), glm::vec3(1.0f, 0.0f, 0.0f));
     model = glm::scale(model, size);

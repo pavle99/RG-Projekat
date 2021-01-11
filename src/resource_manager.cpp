@@ -11,18 +11,16 @@
 #include <iostream>
 #include <sstream>
 #include <fstream>
-
 #include "stb_image.h"
 
 // Instantiate static variables
 std::map<std::string, Texture2D>    ResourceManager::Textures;
 std::map<std::string, Shader>       ResourceManager::Shaders;
-std::map<std::string, Model>        ResourceManager::Models;
 
 
 Shader ResourceManager::LoadShader(const char *vShaderFile, const char *fShaderFile, std::string name)
 {
-    Shaders[name] = loadShaderFromFile(vShaderFile, fShaderFile);
+    Shaders[name] = Shader(vShaderFile, fShaderFile);
     return Shaders[name];
 }
 
@@ -39,18 +37,9 @@ Texture2D ResourceManager::LoadTexture(const char *file, bool alpha, std::string
 
 Texture2D ResourceManager::GetTexture(std::string name)
 {
+
     return Textures[name];
 }
-
-Model ResourceManager::LoadModel(const std::string &file, std::string name) {
-    Models[name] = Model(file, false);
-    return Models[name];
-}
-
-Model ResourceManager::GetModel(std::string name){
-    return Models[name];
-}
-
 
 void ResourceManager::Clear()
 {
@@ -60,9 +49,8 @@ void ResourceManager::Clear()
     // (properly) delete all textures
     for (auto iter : Textures)
         glDeleteTextures(1, &iter.second.ID);
-    //TODO (properly) delete all models
 }
-
+/*
 Shader ResourceManager::loadShaderFromFile(const char *vShaderFile, const char *fShaderFile)
 {
     // 1. retrieve the vertex/fragment source code from filePath
@@ -96,7 +84,7 @@ Shader ResourceManager::loadShaderFromFile(const char *vShaderFile, const char *
     Shader shader(vShaderCode, fShaderCode);
     return shader;
 }
-
+*/
 Texture2D ResourceManager::loadTextureFromFile(const char *file, bool alpha)
 {
     // create texture object

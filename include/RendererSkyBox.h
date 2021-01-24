@@ -1,0 +1,8 @@
+//
+// Created by pavle on 1/24/21.
+//
+
+#ifndef PROJECT_BASE_RENDERERSKYBOX_H
+#define PROJECT_BASE_RENDERERSKYBOX_H
+
+#endif //PROJECT_BASE_RENDERERSKYBOX_H

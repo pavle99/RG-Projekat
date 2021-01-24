@@ -8,6 +8,7 @@
 #include <vector>
 #include <unordered_map>
 #include <fstream>
+#include <learnopengl/filesystem.h>
 #include "resource_manager.h"
 #include "cube_renderer.h"
 #include "cube.h"

@@ -18,9 +18,9 @@ std::map<std::string, Texture2D>    ResourceManager::Textures;
 std::map<std::string, Shader>       ResourceManager::Shaders;
 
 
-Shader ResourceManager::LoadShader(const char *vShaderFile, const char *fShaderFile, std::string name)
+Shader ResourceManager::LoadShader(const char *vShaderFile, const char *fShaderFile, const char *gShaderFile, std::string name)
 {
-    Shaders[name] = Shader(vShaderFile, fShaderFile);
+    Shaders[name] = loadShaderFromFile(vShaderFile, fShaderFile, gShaderFile);
     return Shaders[name];
 }
 
@@ -50,12 +50,14 @@ void ResourceManager::Clear()
     for (auto iter : Textures)
         glDeleteTextures(1, &iter.second.ID);
 }
-/*
-Shader ResourceManager::loadShaderFromFile(const char *vShaderFile, const char *fShaderFile)
+
+
+Shader ResourceManager::loadShaderFromFile(const char *vShaderFile, const char *fShaderFile, const char *gShaderFile)
 {
     // 1. retrieve the vertex/fragment source code from filePath
     std::string vertexCode;
     std::string fragmentCode;
+    std::string geometryCode;
     try
     {
         // open files
@@ -72,6 +74,14 @@ Shader ResourceManager::loadShaderFromFile(const char *vShaderFile, const char *
         vertexCode = vShaderStream.str();
         fragmentCode = fShaderStream.str();
         // if geometry shader path is present, also load a geometry shader
+        if (gShaderFile != nullptr)
+        {
+            std::ifstream geometryShaderFile(gShaderFile);
+            std::stringstream gShaderStream;
+            gShaderStream << geometryShaderFile.rdbuf();
+            geometryShaderFile.close();
+            geometryCode = gShaderStream.str();
+        }
 
     }
     catch (std::exception e)
@@ -80,11 +90,13 @@ Shader ResourceManager::loadShaderFromFile(const char *vShaderFile, const char *
     }
     const char *vShaderCode = vertexCode.c_str();
     const char *fShaderCode = fragmentCode.c_str();
+    const char *gShaderCode = geometryCode.c_str();
     // 2. now create shader object from source code
-    Shader shader(vShaderCode, fShaderCode);
+    Shader shader(vShaderCode, fShaderCode, gShaderFile != nullptr ? gShaderCode : nullptr);
+
     return shader;
 }
-*/
+
 Texture2D ResourceManager::loadTextureFromFile(const char *file, bool alpha)
 {
     // create texture object
@@ -96,7 +108,7 @@ Texture2D ResourceManager::loadTextureFromFile(const char *file, bool alpha)
     }
     // load image
     int width, height, nrChannels;
-    unsigned char* data = stbi_load(file, &width, &height, &nrChannels, 0);
+    unsigned char *data = stbi_load(file, &width, &height, &nrChannels, 0);
     // now generate texture
     texture.Generate(width, height, data);
     // and finally free image data
@@ -104,4 +116,40 @@ Texture2D ResourceManager::loadTextureFromFile(const char *file, bool alpha)
     return texture;
 }
 
+// loads a cubemap texture from 6 individual texture faces
+// order:
+// +X (right)
+// -X (left)
+// +Y (top)
+// -Y (bottom)
+// +Z (front)
+// -Z (back)
+unsigned int ResourceManager::loadCubemap(std::vector<std::string> faces)
+{
+    unsigned int textureID;
+    glGenTextures(1, &textureID);
+    glBindTexture(GL_TEXTURE_CUBE_MAP, textureID);
+    //stbi_set_flip_vertically_on_load(true);
+    int width, height, nrChannels;
+    for (unsigned int i = 0; i < faces.size(); i++)
+    {
+        unsigned char *data = stbi_load(faces[i].c_str(), &width, &height, &nrChannels, 0);
+        if (data)
+        {
+            glTexImage2D(GL_TEXTURE_CUBE_MAP_POSITIVE_X + i, 0, GL_RGB, width, height, 0, GL_RGB, GL_UNSIGNED_BYTE,
+                         data);
+            stbi_image_free(data);
+        } else
+        {
+            std::cout << "Cubemap texture failed to load at path: " << faces[i] << std::endl;
+            stbi_image_free(data);
+        }
+    }
+    glTexParameteri(GL_TEXTURE_CUBE_MAP, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
+    glTexParameteri(GL_TEXTURE_CUBE_MAP, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+    glTexParameteri(GL_TEXTURE_CUBE_MAP, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE);
+    glTexParameteri(GL_TEXTURE_CUBE_MAP, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE);
+    glTexParameteri(GL_TEXTURE_CUBE_MAP, GL_TEXTURE_WRAP_R, GL_CLAMP_TO_EDGE);
 
+    return textureID;
+}

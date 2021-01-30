@@ -1,6 +1,5 @@
-#pragma once
-#ifndef PROJECT_BASE_SHADER_H
-#define PROJECT_BASE_SHADER_H
+#ifndef SHADER_H
+#define SHADER_H
 
 #include <glad/glad.h>
 #include <glm/glm.hpp>
@@ -16,8 +15,6 @@ public:
     unsigned int ID;
     // constructor generates the shader on the fly
     // ------------------------------------------------------------------------
-    Shader() {}
-
     Shader(const char* vertexPath, const char* fragmentPath, const char* geometryPath = nullptr)
     {
         std::string vertexPathString(vertexPath);

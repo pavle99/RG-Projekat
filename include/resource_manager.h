@@ -16,8 +16,8 @@
 #include <glad/glad.h>
 
 #include "texture.h"
-#include "learnopengl/shader.h"
-#include <vector>
+#include "learnopengl/shader_m.h"
+
 
 // A static singleton ResourceManager class that hosts several
 // functions to load Textures and Shaders. Each loaded texture
@@ -36,10 +36,8 @@ public:
     static std::map<std::string, Texture2D> Textures;
 
     static unsigned int loadCubemap(std::vector<std::string> faces);
-
     // loads (and generates) a shader program from file loading vertex, fragment (and geometry) shader's source code. If gShaderFile is not nullptr, it also loads a geometry shader
-    static Shader    LoadShader(const char *vShaderFile, const char *fShaderFile, const char *gShaderFile, std::string name);
-
+    static Shader       LoadShader(const char *vShaderFile, const char *fShaderFile, std::string name);
     // retrieves a stored shader
     static Shader       GetShader(std::string name);
     // loads (and generates) a texture from file
@@ -57,7 +55,6 @@ private:
     // loads a single texture from file
     static Texture2D    loadTextureFromFile(const char *file, bool alpha);
 
-    static Shader    loadShaderFromFile(const char *vShaderFile, const char *fShaderFile, const char *gShaderFile = nullptr);
 };
 
 #endif

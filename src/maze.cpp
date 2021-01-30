@@ -1,23 +1,18 @@
-
 #include "maze.h"
 
 RendererSkyBox *SkyBoxRenderer;
 CubeRenderer *Cube_renderer;
-
 
 Maze::Maze(unsigned int width, unsigned int height)
 {
     this->width = width;
     this->height = height;
     this->camera.Position = glm::vec3(3.0f, 12.0f, -8.0f);
-
     this->currentLevel = 0;
-
 }
 
 void Maze::init()
 {
-
 
     //load shaders
     ResourceManager::LoadShader("resources/shaders/vertex_shader.vs",
@@ -27,6 +22,8 @@ void Maze::init()
     ResourceManager::LoadShader("resources/shaders/vertex_shader_skybox.vs",
                                 "resources/shaders/fragment_shader_skybox.fs",
                                 "skybox");
+
+    ResourceManager::GetShader("box").setFloat("material.diffuse", 0.8);
 
     //create render objects
     SkyBoxRenderer = new RendererSkyBox(ResourceManager::GetShader("skybox"), this->camera);
@@ -40,7 +37,6 @@ void Maze::init()
     ResourceManager::LoadTexture("resources/textures/container.jpg", false, "floorspec");
     ResourceManager::LoadTexture("resources/textures/awesomeface.png", true, "goal");
     ResourceManager::LoadTexture("resources/textures/awesomeface.png", true, "goalspec");
-
 
     // +X (right)
     // -X (left)
@@ -58,7 +54,6 @@ void Maze::init()
                     "resources/textures/Yokohama2/negy.jpg",
                     "resources/textures/Yokohama2/posz.jpg",
                     "resources/textures/Yokohama2/negz.jpg",
-
             };
 
     unsigned int skyBoxID = ResourceManager::loadCubemap(faces);
@@ -107,4 +102,3 @@ void Maze::Draw(){
     //FIXME SKYBOX DOESNT WORK
     SkyBoxRenderer->Draw();
 }
-

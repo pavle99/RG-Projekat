@@ -10,7 +10,7 @@
 #include <glm/gtc/type_ptr.hpp>
 
 #include <learnopengl/filesystem.h>
-#include <learnopengl/shader.h>
+#include <learnopengl/shader_m.h>
 #include <learnopengl/camera.h>
 #include <learnopengl/model.h>
 
@@ -177,8 +177,9 @@ int main()
     // build and compile shaders
     // -------------------------
 
-//    Shader ourShader("resources/shaders/vertex_shader.vs", "resources/shaders/fragment_shader.fs");
 
+
+    //Shader ourShader("resources/shaders/vertex_shader.vs", "resources/shaders/fragment_shader.fs");
 //
 //    // load models
 //    // -----------
@@ -205,9 +206,7 @@ int main()
     // -----------
 
 
-
     maze.init();
-
     while (!glfwWindowShouldClose(window))
     {
         // per-frame time logic
@@ -254,9 +253,7 @@ int main()
 //        ourShader.setMat4("model", model);
 //        ourModel.Draw(ourShader);
 
-
         maze.Draw();
-
 
         if (programState->ImGuiEnabled)
             DrawImGui(programState);
@@ -285,6 +282,7 @@ int main()
 // process all input: query GLFW whether relevant keys are pressed/released this frame and react accordingly
 // ---------------------------------------------------------------------------------------------------------
 
+//
 void processInput(GLFWwindow *window)
 {
     if (glfwGetKey(window, GLFW_KEY_ESCAPE) == GLFW_PRESS)

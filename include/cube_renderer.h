@@ -3,7 +3,7 @@
 #define PROJECT_BASE_CUBE_RENDERER_H
 
 #include "texture.h"
-#include <learnopengl/shader.h>
+#include <learnopengl/shader_m.h>
 #include <learnopengl/camera.h>
 
 //class that renders all things cube-shaped

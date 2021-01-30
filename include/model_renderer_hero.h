@@ -2,7 +2,7 @@
 #ifndef PROJECT_BASE_MODEL_RENDERER_HERO_H
 #define PROJECT_BASE_MODEL_RENDERER_HERO_H
 
-#include <learnopengl/shader.h>
+#include <learnopengl/shader_m.h>
 #include <learnopengl/camera.h>
 #include <learnopengl/model.h>
 

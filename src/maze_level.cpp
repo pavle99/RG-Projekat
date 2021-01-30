@@ -1,4 +1,4 @@
-#include <maze_level.h>
+#include "maze_level.h"
 
 enum {
     WALL = 9,
@@ -65,6 +65,11 @@ void MazeLevel::update(){
         }
     }
     this->Lights.emplace_back(cubeSize*((float)mapX)/2.0f, cubeSize*7.0f, cubeSize*((float)mapY)/2.0f);
+    this->Lights.emplace_back(cubeSize*((float)mapX), cubeSize*7.0f, 0);
+    this->Lights.emplace_back(cubeSize*((float)mapX), cubeSize*7.0f, cubeSize*((float)mapY));
+    this->Lights.emplace_back(0, cubeSize*7.0f, cubeSize*((float)mapY));
+    this->Lights.emplace_back(0, cubeSize*7.0f, 0);
+
 }
 
 bool MazeLevel::Move(int direction){

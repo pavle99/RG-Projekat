@@ -13,7 +13,8 @@
 #include "cube.h"
 
 
-class MazeLevel{
+class MazeLevel
+{
 public:
     //stores walls, floors, and goal cube
     std::vector<Cube> Cubes;
@@ -23,7 +24,8 @@ public:
     std::vector<glm::vec3> Lights;
     //glm::vec3 goalPos; //implement this way if we decide to load goal model
 
-    MazeLevel() {}
+    MazeLevel()
+    {}
 
     //load from file and initializes the
     void Load(const char *file);
@@ -35,18 +37,23 @@ public:
     bool IsComplete();
 
     void update();
+
 private:
     std::vector<std::vector<unsigned int>> mazeMap;
+    std::vector<std::vector<unsigned int>> endPointMap;
     //hero coordinates
     unsigned int heroX;
     unsigned int heroY;
     //maze dimensions
     unsigned int mapX;
     unsigned int mapY;
+    //end coordinates
+    unsigned int endX;
+    unsigned int endY;
+    //initializing the level's structure
+    void init();
+
 };
-
-
-
 
 
 #endif //PROJECT_BASE_MAZE_LEVEL_H

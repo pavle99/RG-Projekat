@@ -56,6 +56,7 @@ void Maze::init()
                     "resources/textures/Yokohama2/negz.jpg",
             };
 
+    //load cubemap
     unsigned int skyBoxID = ResourceManager::loadCubemap(faces);
     SkyBoxRenderer->set_cube_map_texture_id(skyBoxID);
 

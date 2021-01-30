@@ -11,6 +11,7 @@
 
 #include <map>
 #include <string>
+#include <vector>
 
 #include <glad/glad.h>
 
@@ -33,6 +34,8 @@ public:
     // resource storage
     static std::map<std::string, Shader>    Shaders;
     static std::map<std::string, Texture2D> Textures;
+
+    static unsigned int loadCubemap(std::vector<std::string> faces);
     // loads (and generates) a shader program from file loading vertex, fragment (and geometry) shader's source code. If gShaderFile is not nullptr, it also loads a geometry shader
     static Shader       LoadShader(const char *vShaderFile, const char *fShaderFile, std::string name);
     // retrieves a stored shader

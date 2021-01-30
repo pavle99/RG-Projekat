@@ -24,13 +24,14 @@ void MazeLevel::Load(const char *file){
         if(mapX > 0 && mapY > 0) //(if) is not needed if correct input (file)
             this->update();
     }
+
 }
 
 void MazeLevel::update(){
     Cubes.clear();
     Lights.clear();
 
-    float cubeSize = 1;
+    float cubeSize = 3;
 
     for(unsigned int i = 0; i < mapX; i++){
         for(unsigned int j = 0; j < mapY; j++){
@@ -60,10 +61,10 @@ void MazeLevel::update(){
                 this->Cubes.push_back(cube);
             }
 
-            //TODO implement a way to load light objects if needed, maybe through mapFile?
-            this->Lights.emplace_back(cubeSize*((float)mapX)/2.0f, 7.0f, cubeSize*((float)mapY)/2.0f);
+
         }
     }
+    this->Lights.emplace_back(cubeSize*((float)mapX)/2.0f, cubeSize*7.0f, cubeSize*((float)mapY)/2.0f);
 }
 
 bool MazeLevel::Move(int direction){

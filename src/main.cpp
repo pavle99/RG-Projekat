@@ -14,6 +14,9 @@
 #include <learnopengl/camera.h>
 #include <learnopengl/model.h>
 
+#include "resource_manager.h"
+#include "maze.h"
+
 #include <iostream>
 
 void framebuffer_size_callback(GLFWwindow *window, int width, int height);
@@ -106,6 +109,8 @@ void ProgramState::LoadFromFile(std::string filename)
 
 ProgramState *programState;
 
+Maze maze(800, 600);
+
 void DrawImGui(ProgramState *programState);
 
 int main()
@@ -171,7 +176,9 @@ int main()
 
     // build and compile shaders
     // -------------------------
+
 //    Shader ourShader("resources/shaders/vertex_shader.vs", "resources/shaders/fragment_shader.fs");
+
 //
 //    // load models
 //    // -----------
@@ -196,6 +203,11 @@ int main()
 
     // render loop
     // -----------
+
+
+
+    maze.init();
+
     while (!glfwWindowShouldClose(window))
     {
         // per-frame time logic
@@ -242,6 +254,10 @@ int main()
 //        ourShader.setMat4("model", model);
 //        ourModel.Draw(ourShader);
 
+
+        maze.Draw();
+
+
         if (programState->ImGuiEnabled)
             DrawImGui(programState);
 
@@ -252,6 +268,8 @@ int main()
         glfwSwapBuffers(window);
         glfwPollEvents();
     }
+
+    ResourceManager::Clear();
 
     programState->SaveToFile("resources/program_state.txt");
     delete programState;
@@ -266,19 +284,24 @@ int main()
 
 // process all input: query GLFW whether relevant keys are pressed/released this frame and react accordingly
 // ---------------------------------------------------------------------------------------------------------
+
 void processInput(GLFWwindow *window)
 {
     if (glfwGetKey(window, GLFW_KEY_ESCAPE) == GLFW_PRESS)
         glfwSetWindowShouldClose(window, true);
 
     if (glfwGetKey(window, GLFW_KEY_W) == GLFW_PRESS)
-        programState->camera.ProcessKeyboard(FORWARD, deltaTime);
+        maze.ProcessInput(deltaTime, FORWARD);
+//        programState->camera.ProcessKeyboard(FORWARD, deltaTime);
     if (glfwGetKey(window, GLFW_KEY_S) == GLFW_PRESS)
-        programState->camera.ProcessKeyboard(BACKWARD, deltaTime);
+        maze.ProcessInput(deltaTime, BACKWARD);
+//        programState->camera.ProcessKeyboard(BACKWARD, deltaTime);
     if (glfwGetKey(window, GLFW_KEY_A) == GLFW_PRESS)
-        programState->camera.ProcessKeyboard(LEFT, deltaTime);
+        maze.ProcessInput(deltaTime, LEFT);
+//        programState->camera.ProcessKeyboard(LEFT, deltaTime);
     if (glfwGetKey(window, GLFW_KEY_D) == GLFW_PRESS)
-        programState->camera.ProcessKeyboard(RIGHT, deltaTime);
+        maze.ProcessInput(deltaTime, RIGHT);
+//        programState->camera.ProcessKeyboard(RIGHT, deltaTime);
 }
 
 // glfw: whenever the window size changed (by OS or user resize) this callback function executes
@@ -307,8 +330,7 @@ void mouse_callback(GLFWwindow *window, double xpos, double ypos)
     lastX = xpos;
     lastY = ypos;
 
-    if (programState->CameraMouseMovementUpdateEnabled)
-        programState->camera.ProcessMouseMovement(xoffset, yoffset);
+    maze.ProcessMouseMovement(xoffset, yoffset);
 }
 
 // glfw: whenever the mouse scroll wheel scrolls, this callback is called
@@ -366,5 +388,8 @@ void key_callback(GLFWwindow *window, int key, int scancode, int action, int mod
         {
             glfwSetInputMode(window, GLFW_CURSOR, GLFW_CURSOR_DISABLED);
         }
+    }
+    if ((key == GLFW_KEY_UP  || key == GLFW_KEY_LEFT || key == GLFW_KEY_DOWN || key == GLFW_KEY_RIGHT) && action == GLFW_PRESS) {
+        maze.Move(key);
     }
 }

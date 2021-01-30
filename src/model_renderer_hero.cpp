@@ -2,17 +2,19 @@
 
 
 ModelRendererHero::ModelRendererHero(Shader shader, Camera &camera)
-        :camera(camera)
+        : camera(camera)
 {
     this->shader = shader;
 }
 
-ModelRendererHero::~ModelRendererHero(){}
+ModelRendererHero::~ModelRendererHero()
+{}
 
-void ModelRendererHero::Draw(Model model, glm::vec3 position, glm::vec3 size, glm::vec3 rotation, float angle) {
+void ModelRendererHero::Draw(Model model, glm::vec3 position, glm::vec3 size, glm::vec3 rotation, float angle)
+{
     this->shader.use();
 
-    glm::mat4 projection = glm::perspective(glm::radians(camera.Zoom), 800.0f/600.0f, 0.1f, 100.0f);
+    glm::mat4 projection = glm::perspective(glm::radians(camera.Zoom), 800.0f / 600.0f, 0.1f, 100.0f);
     glm::mat4 view = camera.GetViewMatrix();
     this->shader.setMat4("projection", projection);
     this->shader.setMat4("view", view);

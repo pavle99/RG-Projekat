@@ -21,6 +21,7 @@ struct PointLight {
 
 #define MAX_NUMBER_OF_LIGHTS 20
 
+
 in vec2 TexCoords;
 in vec3 Normals;
 in vec3 FragPos;
@@ -37,12 +38,14 @@ vec3 CalcPointLight(PointLight light, vec3 normal, vec3 fragPos, vec3 viewDir);
 
 void main()
 {
+
     vec3 norm = normalize(Normals);
     vec3 viewDir = normalize(viewPos - FragPos);
     vec3 result = vec3(0.0f, 0.0f, 0.0f);
 
     for(int i = 0; i < number_of_lights; i++)
         result += CalcPointLight(pointLights[i], norm, FragPos, viewDir);
+
 
     FragColor = vec4(result, 1.0) * vec4(defaultColor, alfa);
 }
@@ -59,9 +62,11 @@ vec3 CalcPointLight(PointLight light, vec3 normal, vec3 fragPos, vec3 viewDir)
     float distance = length(light.position - fragPos);
     float attenuation = 1.0 / (light.constant + light.linear * distance + light.quadratic * (distance * distance));
     // combine ambinet, diffuse and specular
+
     vec3 ambient = light.ambient * vec3(texture(material.diffuse, TexCoords));
     vec3 diffuse = light.diffuse * diff * vec3(texture(material.diffuse, TexCoords));
     vec3 specular = light.specular * spec * vec3(texture(material.specular, TexCoords));
+
     ambient *= attenuation;
     diffuse *= attenuation;
     specular *= attenuation;

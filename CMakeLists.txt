@@ -42,7 +42,7 @@ include_directories(${CMAKE_BINARY_DIR}/configuration)
 
 include_directories(include/)
 add_executable(${PROJECT_NAME}
-        ${SOURCES} include/texture.h src/texture.cpp include/resource_manager.h src/resource_manager.cpp include/cube_renderer.h src/cube_renderer.cpp include/cube.h src/cube.cpp include/model_renderer_hero.h src/model_renderer_hero.cpp include/maze_level.h src/maze_level.cpp include/maze.h src/maze.cpp)
+        ${SOURCES} include/texture.h src/texture.cpp include/resource_manager.h src/resource_manager.cpp include/cube_renderer.h src/cube_renderer.cpp include/cube.h src/cube.cpp include/model_renderer_hero.h src/model_renderer_hero.cpp include/maze_level.h src/maze_level.cpp include/maze.h src/maze.cpp include/RendererSkyBox.h src/RendererSkyBox.cpp)
 
 target_link_libraries(${PROJECT_NAME} ${LIBS})
 

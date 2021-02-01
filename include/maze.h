@@ -19,6 +19,8 @@ public:
 
     void ProcessMouseMovement(float xoffset,float yoffset);
 
+    void ProcessScroll(float yoffset);
+
     void Move(int direction);
 
     void Draw();

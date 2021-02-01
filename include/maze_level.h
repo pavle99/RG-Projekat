@@ -11,18 +11,27 @@
 #include "resource_manager.h"
 #include "cube_renderer.h"
 #include "cube.h"
+#include "plane_renderer.h"
+#include "plane.h"
 
 
 class MazeLevel
 {
 public:
-    //stores walls, floors, and goal cube
+    //stores walls
     std::vector<Cube> Cubes;
+    //stores floors
+    std::vector<Plane> Planes;
+    //position for goal
+    glm::vec3 GoalPos;
     //position needed for rendering hero model
     glm::vec3 HeroPos;
+    //hero rotation
+    float HeroRotation;
     //light positions
     std::vector<glm::vec3> Lights;
-    //glm::vec3 goalPos; //implement this way if we decide to load goal model
+    //size of each cube
+    float CubeSize;
 
     MazeLevel()
     {}
@@ -30,7 +39,7 @@ public:
     //load from file and initializes the
     void Load(const char *file);
 
-    void Draw(CubeRenderer &renderer);
+    void Draw(CubeRenderer &cube_renderer, PlaneRenderer &plane_renderer);
 
     bool Move(int direction);
 
@@ -40,16 +49,14 @@ public:
 
 private:
     std::vector<std::vector<unsigned int>> mazeMap;
-    std::vector<std::vector<unsigned int>> endPointMap;
+    //Don't need endPointMap, there's only one end point.
+    //std::vector<std::vector<unsigned int>> endPointMap;
     //hero coordinates
     unsigned int heroX;
     unsigned int heroY;
     //maze dimensions
     unsigned int mapX;
     unsigned int mapY;
-    //end coordinates
-    unsigned int endX;
-    unsigned int endY;
     //initializing the level's structure
     void init();
 

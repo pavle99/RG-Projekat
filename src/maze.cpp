@@ -1,7 +1,8 @@
 #include "maze.h"
 
-RendererSkyBox *SkyBoxRenderer;
-CubeRenderer *Cube_renderer;
+RendererSkyBox *skybox_renderer;
+CubeRenderer *cube_renderer;
+PlaneRenderer *plane_renderer;
 
 Maze::Maze(unsigned int width, unsigned int height)
 {
@@ -17,24 +18,27 @@ void Maze::init()
     //load shaders
     ResourceManager::LoadShader("resources/shaders/vertex_shader.vs",
                                 "resources/shaders/fragment_shader_box.fs",
-                                "box");
+                                "cube");
+
+    ResourceManager::LoadShader("resources/shaders/vertex_shader.vs",
+                                "resources/shaders/fragment_shader_plane.fs",
+                                "plane");
 
     ResourceManager::LoadShader("resources/shaders/vertex_shader_skybox.vs",
                                 "resources/shaders/fragment_shader_skybox.fs",
                                 "skybox");
 
-    ResourceManager::GetShader("box").setFloat("material.diffuse", 0.8);
-
     //create render objects
-    SkyBoxRenderer = new RendererSkyBox(ResourceManager::GetShader("skybox"), this->camera);
-    Cube_renderer = new CubeRenderer(ResourceManager::GetShader("box"), this->camera);
+    skybox_renderer = new RendererSkyBox(ResourceManager::GetShader("skybox"), this->camera);
+    cube_renderer = new CubeRenderer(ResourceManager::GetShader("cube"), this->camera);
+    plane_renderer = new PlaneRenderer(ResourceManager::GetShader("plane"), this->camera);
 
     //load textures
     //TODO GET TEXTURES FOR WALLS, FLOOR, AND GOAL
-    ResourceManager::LoadTexture("resources/textures/container.jpg", false, "wall");
-    ResourceManager::LoadTexture("resources/textures/container.jpg", false, "wallspec");
-    ResourceManager::LoadTexture("resources/textures/container.jpg", false, "floor");
-    ResourceManager::LoadTexture("resources/textures/container.jpg", false, "floorspec");
+    ResourceManager::LoadTexture("resources/textures/wall.jpg", false, "wall");
+    ResourceManager::LoadTexture("resources/textures/wall.jpg", false, "wallspec");
+    ResourceManager::LoadTexture("resources/textures/floor.jpg", false, "floor");
+    ResourceManager::LoadTexture("resources/textures/floor.jpg", false, "floorspec");
     ResourceManager::LoadTexture("resources/textures/awesomeface.png", true, "goal");
     ResourceManager::LoadTexture("resources/textures/awesomeface.png", true, "goalspec");
 
@@ -58,7 +62,7 @@ void Maze::init()
 
     //load cubemap
     unsigned int skyBoxID = ResourceManager::loadCubemap(faces);
-    SkyBoxRenderer->set_cube_map_texture_id(skyBoxID);
+    skybox_renderer->set_cube_map_texture_id(skyBoxID);
 
     MazeLevel first, second;
 
@@ -88,18 +92,28 @@ void Maze::ProcessMouseMovement(float xoffset,float yoffset){
     this->camera.ProcessMouseMovement(xoffset, yoffset);
 }
 
+void Maze::ProcessScroll(float yoffset){
+    this->camera.ProcessMouseScroll(yoffset);
+}
+
 void Maze::Draw(){
-    Levels[currentLevel].update();
 
     if(Levels[currentLevel].IsComplete() && currentLevel + 1 < Levels.size())
         currentLevel++;
 
-    Levels[currentLevel].Draw(*Cube_renderer);
+    Levels[currentLevel].Draw(*cube_renderer, *plane_renderer);
+
+    //Drawing the goal from the outside
+    cube_renderer->Draw(Levels[currentLevel].Lights, ResourceManager::GetTexture("goal"),
+                        ResourceManager::GetTexture("goalspec"),Levels[currentLevel].GoalPos,
+                        glm::vec3(Levels[currentLevel].CubeSize), 0.0f,
+                        glm::vec3(0.0f, 1.0f, 0.0f), true);
 
     //current solution until we get a model for our hero
     //TODO GET HERO MODEL
-    Cube_renderer->Draw(Levels[currentLevel].Lights, ResourceManager::GetTexture("goal"), ResourceManager::GetTexture("goalspec"),
-                       Levels[currentLevel].HeroPos);
-    //FIXME SKYBOX DOESNT WORK
-    SkyBoxRenderer->Draw();
+    cube_renderer->Draw(Levels[currentLevel].Lights, ResourceManager::GetTexture("goal"),
+                        ResourceManager::GetTexture("goalspec"),Levels[currentLevel].HeroPos,
+                        glm::vec3(Levels[currentLevel].CubeSize), Levels[currentLevel].HeroRotation);
+    //FIXME SKYBOX NOT RENDERING PROPERLY
+    skybox_renderer->Draw();
 }

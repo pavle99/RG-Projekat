@@ -27,60 +27,26 @@ void MazeLevel::Load(const char *file)
             }
         }
         if (mapX > 0 && mapY > 0) //(if) is not needed if correct input (file)
-            this->update();
+            this->init();
     }
 
 }
 
 void MazeLevel::update()
 {
-    Cubes.clear();
-    Lights.clear();
-
-    float cubeSize = 3;
-
     for (unsigned int i = 0; i < mapX; i++)
     {
         for (unsigned int j = 0; j < mapY; j++)
         {
-            glm::vec3 pos = glm::vec3(((float) i) * cubeSize, 0.0f, ((float) j) * cubeSize);
-            glm::vec3 size = glm::vec3(cubeSize);
-            //loading all walls
-            if (mazeMap[i][j] == WALL)
-            {
-                Cube cube(pos, size, ResourceManager::GetTexture("wall"), ResourceManager::GetTexture("wallspec"));
-                this->Cubes.push_back(cube);
-            }
-            //loading the goal object, HERO_ON_GOAL has both hero and goal on it, so both must be loaded
-            if (mazeMap[i][j] == GOAL || mazeMap[i][j] == HERO_ON_GOAL)
-            {
-                Cube cube(pos, size, ResourceManager::GetTexture("goal"), ResourceManager::GetTexture("goalspec"),
-                          glm::vec3(0.0f, 1.0f, 0.0f), true);
-                this->Cubes.push_back(cube);
-            }
             //updating the hero position for later rendering of the model
             if (mazeMap[i][j] == HERO || mazeMap[i][j] == HERO_ON_GOAL)
             {
                 heroX = i;
                 heroY = j;
-                HeroPos = pos;
+                HeroPos = glm::vec3(((float) i) * CubeSize, 0.0f, ((float) j) * CubeSize);
             }
-
-            if (mazeMap[i][j] != AIR)
-            {//FLOOR
-                pos -= glm::vec3(0.0f, cubeSize, 0.0f);
-                Cube cube(pos, size, ResourceManager::GetTexture("floor"), ResourceManager::GetTexture("floorspec"));
-                this->Cubes.push_back(cube);
-            }
-
-
         }
     }
-    this->Lights.emplace_back(cubeSize * ((float) mapX) / 2.0f, cubeSize * 7.0f, cubeSize * ((float) mapY) / 2.0f);
-    this->Lights.emplace_back(cubeSize * ((float) mapX), cubeSize * 7.0f, 0);
-    this->Lights.emplace_back(cubeSize * ((float) mapX), cubeSize * 7.0f, cubeSize * ((float) mapY));
-    this->Lights.emplace_back(0, cubeSize * 7.0f, cubeSize * ((float) mapY));
-    this->Lights.emplace_back(0, cubeSize * 7.0f, 0);
 
 }
 
@@ -95,15 +61,19 @@ bool MazeLevel::Move(int direction)
     {
         case GLFW_KEY_UP:
             directionY = 1;
+            HeroRotation = 0;
             break;
         case GLFW_KEY_LEFT:
             directionX = 1;
+            HeroRotation = 90;
             break;
         case GLFW_KEY_DOWN:
             directionY = -1;
+            HeroRotation = 180;
             break;
         case GLFW_KEY_RIGHT:
             directionX = -1;
+            HeroRotation = 270;
             break;
         default:
             break;
@@ -154,69 +124,62 @@ bool MazeLevel::IsComplete()
     return false;
 }
 
-void MazeLevel::Draw(CubeRenderer &renderer)
+void MazeLevel::Draw(CubeRenderer &cube_renderer, PlaneRenderer &plane_renderer)
 {
+    glEnable(GL_CULL_FACE);
     for (Cube &cube : this->Cubes)
     {
-        cube.Draw(renderer, this->Lights);
+        cube.Draw(cube_renderer, this->Lights);
+    }
+    glDisable(GL_CULL_FACE);
+    for (Plane &plane : this->Planes)
+    {
+        plane.Draw(plane_renderer, this->Lights);
     }
 }
 
 void MazeLevel::init()
 {
-    float unitSize = 1.0f;
-    unsigned int sz = std::max(mapX, mapY);
-    mazeMap.resize(sz);
-    for (unsigned int i = 0; i < sz; i++)
-        mazeMap[i].resize(sz);
-    endPointMap.resize(sz);
-    for (unsigned int i = 0; i < sz; i++)
-        endPointMap[i].resize(sz);
+    Cubes.clear();
+    Lights.clear();
+    Planes.clear();
 
-    for (unsigned int i = 0; i < sz; i++)
+    HeroRotation = 0;
+    CubeSize = 3;
+
+    for (unsigned int i = 0; i < mapX; i++)
     {
-        for (unsigned int j = 0; j < sz; j++)
+        for (unsigned int j = 0; j < mapY; j++)
         {
+            glm::vec3 pos = glm::vec3(((float) i) * CubeSize, 0.0f, ((float) j) * CubeSize);
+            glm::vec3 size = glm::vec3(CubeSize);
+            //loading all walls
             if (mazeMap[i][j] == WALL)
             {
-                glm::vec3 pos(i * unitSize, 0.0f, j * unitSize);
-                glm::vec3 size(unitSize);
-                Cube obj(pos, size, ResourceManager::GetTexture("wall"), glm::vec3(1.0f));
-                this->Cubes.push_back(obj);
-                pos = glm::vec3(i * unitSize, -unitSize, j * unitSize);
-                size = glm::vec3(unitSize);
-                obj = Cube(pos, size, ResourceManager::GetTexture("floor"), glm::vec3(1.0f));
-                this->Cubes.push_back(obj);
-            } else if (mazeMap[i][j] == HERO_ON_GOAL)
+                Cube cube(pos, size, ResourceManager::GetTexture("wall"), ResourceManager::GetTexture("wallspec"));
+                this->Cubes.push_back(cube);
+            }
+            //loading the goal object, HERO_ON_GOAL has both hero and goal on it, so both must be loaded
+            if (mazeMap[i][j] == GOAL || mazeMap[i][j] == HERO_ON_GOAL)
             {
-                this->endX = i;
-                this->endY = j;
-                glm::vec3 pos(i * unitSize, 0.0f, j * unitSize);
-                glm::vec3 size(unitSize);
-                Cube obj(pos, size, ResourceManager::GetTexture("container"), glm::vec3(1.0f));
-                this->Cubes.push_back(obj);
-                if (endPointMap[i][j] == 1)
-                {
-                    pos = glm::vec3(i * unitSize, -unitSize, j * unitSize);
-                    size = glm::vec3(unitSize);
-                    obj = Cube(pos, size, ResourceManager::GetTexture("target"), glm::vec3(1.0f));
-                    this->Cubes.push_back(obj);
-                } else
-                {
-                    pos = glm::vec3(i * unitSize, 0.0f, j * unitSize);
-                    size = glm::vec3(unitSize);
-                    obj = Cube(pos, size, ResourceManager::GetTexture("floor"), glm::vec3(1.0f));
-                    this->Cubes.push_back(obj);
-                }
+                this->GoalPos = pos;
+            }
+            //updating the hero position for later rendering of the model
+            if (mazeMap[i][j] == HERO || mazeMap[i][j] == HERO_ON_GOAL)
+            {
+                heroX = i;
+                heroY = j;
+                HeroPos = pos;
             }
 
-            else if (mazeMap[i][j] == FLOOR)
-            {
-                glm::vec3 pos(i * unitSize, -unitSize, j * unitSize);
-                glm::vec3 size(unitSize);
-                Cube obj(pos, size, ResourceManager::GetTexture("floor"), glm::vec3(1.0f));
-                this->Cubes.push_back(obj);
+            if (mazeMap[i][j] != AIR)
+            {//FLOOR
+                pos -= glm::vec3(0.0f, CubeSize, 0.0f);
+                Plane plane(pos, size, ResourceManager::GetTexture("floor"), ResourceManager::GetTexture("floorspec"));
+                this->Planes.push_back(plane);
             }
         }
+        this->Lights.emplace_back(CubeSize * float(i), CubeSize * 2.0f, i%2 == 0 ? CubeSize * 1.0f/4 * float(mapY) : CubeSize * 3.0f/4 * float(mapY) );
     }
+
 }

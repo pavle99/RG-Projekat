@@ -173,7 +173,8 @@ int main()
     // configure global opengl state
     // -----------------------------
     glEnable(GL_DEPTH_TEST);
-
+    glEnable(GL_BLEND);
+    glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
     // build and compile shaders
     // -------------------------
 
@@ -335,7 +336,8 @@ void mouse_callback(GLFWwindow *window, double xpos, double ypos)
 // ----------------------------------------------------------------------
 void scroll_callback(GLFWwindow *window, double xoffset, double yoffset)
 {
-    programState->camera.ProcessMouseScroll(yoffset);
+    maze.ProcessScroll(yoffset);
+    //programState->camera.ProcessMouseScroll(yoffset);
 }
 
 void DrawImGui(ProgramState *programState)

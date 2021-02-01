@@ -34,13 +34,12 @@ void Maze::init()
     plane_renderer = new PlaneRenderer(ResourceManager::GetShader("plane"), this->camera);
 
     //load textures
-    //TODO GET TEXTURES FOR WALLS, FLOOR, AND GOAL
     ResourceManager::LoadTexture("resources/textures/wall.jpg", false, "wall");
     ResourceManager::LoadTexture("resources/textures/wall.jpg", false, "wallspec");
     ResourceManager::LoadTexture("resources/textures/floor.jpg", false, "floor");
     ResourceManager::LoadTexture("resources/textures/floor.jpg", false, "floorspec");
-    ResourceManager::LoadTexture("resources/textures/awesomeface.png", true, "goal");
-    ResourceManager::LoadTexture("resources/textures/awesomeface.png", true, "goalspec");
+    ResourceManager::LoadTexture("resources/textures/goal.png", true, "goal");
+    ResourceManager::LoadTexture("resources/textures/goal.png", true, "goalspec");
 
     // +X (right)
     // -X (left)

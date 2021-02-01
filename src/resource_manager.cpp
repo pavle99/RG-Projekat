@@ -16,7 +16,18 @@
 // Instantiate static variables
 std::map<std::string, Texture2D>    ResourceManager::Textures;
 std::map<std::string, Shader>       ResourceManager::Shaders;
+std::map<std::string, Model>        ResourceManager::Models;
 
+//Model ResourceManager::LoadModel(std::string const &path, std::string name)
+//{
+//    Models[name] = Model(path, false);
+//    return Models[name];
+//}
+//
+//Model ResourceManager::GetModel(std::string name)
+//{
+//    return Models[name];
+//}
 
 Shader ResourceManager::LoadShader(const char *vShaderFile, const char *fShaderFile, std::string name)
 {
@@ -49,6 +60,7 @@ void ResourceManager::Clear()
     for (auto iter : Textures)
         glDeleteTextures(1, &iter.second.ID);
 }
+
 /*
 Shader ResourceManager::loadShaderFromFile(const char *vShaderFile, const char *fShaderFile)
 {
@@ -95,7 +107,7 @@ Texture2D ResourceManager::loadTextureFromFile(const char *file, bool alpha)
     }
     // load image
     int width, height, nrChannels;
-    unsigned char* data = stbi_load(file, &width, &height, &nrChannels, 0);
+    unsigned char *data = stbi_load(file, &width, &height, &nrChannels, 0);
     // now generate texture
     texture.Generate(width, height, data);
     // and finally free image data

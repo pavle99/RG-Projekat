@@ -17,7 +17,7 @@
 
 #include "texture.h"
 #include "learnopengl/shader_m.h"
-
+#include <learnopengl/model.h>
 
 // A static singleton ResourceManager class that hosts several
 // functions to load Textures and Shaders. Each loaded texture
@@ -34,6 +34,10 @@ public:
     // resource storage
     static std::map<std::string, Shader>    Shaders;
     static std::map<std::string, Texture2D> Textures;
+    static std::map<std::string, Model> Models;
+
+    static Model LoadModel(std::string const &path, std::string name);
+    static Model GetModel(std::string name);
 
     static unsigned int loadCubemap(std::vector<std::string> faces);
     // loads (and generates) a shader program from file loading vertex, fragment (and geometry) shader's source code. If gShaderFile is not nullptr, it also loads a geometry shader

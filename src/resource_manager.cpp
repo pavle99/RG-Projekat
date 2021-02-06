@@ -16,18 +16,18 @@
 // Instantiate static variables
 std::map<std::string, Texture2D>    ResourceManager::Textures;
 std::map<std::string, Shader>       ResourceManager::Shaders;
-std::map<std::string, Model>        ResourceManager::Models;
+std::map<std::string, Model*>        ResourceManager::Models;
 
-//Model ResourceManager::LoadModel(std::string const &path, std::string name)
-//{
-//    Models[name] = Model(path, false);
-//    return Models[name];
-//}
-//
-//Model ResourceManager::GetModel(std::string name)
-//{
-//    return Models[name];
-//}
+Model ResourceManager::LoadModel(std::string const &path, std::string name)
+{
+    Models[name] = new Model(path, false);
+    return *Models[name];
+}
+
+Model ResourceManager::GetModel(std::string name)
+{
+    return *Models[name];
+}
 
 Shader ResourceManager::LoadShader(const char *vShaderFile, const char *fShaderFile, std::string name)
 {
@@ -61,41 +61,6 @@ void ResourceManager::Clear()
         glDeleteTextures(1, &iter.second.ID);
 }
 
-/*
-Shader ResourceManager::loadShaderFromFile(const char *vShaderFile, const char *fShaderFile)
-{
-    // 1. retrieve the vertex/fragment source code from filePath
-    std::string vertexCode;
-    std::string fragmentCode;
-    try
-    {
-        // open files
-        std::ifstream vertexShaderFile(vShaderFile);
-        std::ifstream fragmentShaderFile(fShaderFile);
-        std::stringstream vShaderStream, fShaderStream;
-        // read file's buffer contents into streams
-        vShaderStream << vertexShaderFile.rdbuf();
-        fShaderStream << fragmentShaderFile.rdbuf();
-        // close file handlers
-        vertexShaderFile.close();
-        fragmentShaderFile.close();
-        // convert stream into string
-        vertexCode = vShaderStream.str();
-        fragmentCode = fShaderStream.str();
-        // if geometry shader path is present, also load a geometry shader
-
-    }
-    catch (std::exception e)
-    {
-        std::cout << "ERROR::SHADER: Failed to read shader files" << std::endl;
-    }
-    const char *vShaderCode = vertexCode.c_str();
-    const char *fShaderCode = fragmentCode.c_str();
-    // 2. now create shader object from source code
-    Shader shader(vShaderCode, fShaderCode);
-    return shader;
-}
-*/
 Texture2D ResourceManager::loadTextureFromFile(const char *file, bool alpha)
 {
     // create texture object

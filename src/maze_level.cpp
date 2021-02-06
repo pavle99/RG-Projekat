@@ -60,20 +60,20 @@ bool MazeLevel::Move(int direction)
     switch (direction)
     {
         case GLFW_KEY_UP:
+            directionX = -1;
+            HeroRotation = 270;
+            break;
+        case GLFW_KEY_LEFT:
             directionY = 1;
             HeroRotation = 0;
             break;
-        case GLFW_KEY_LEFT:
+        case GLFW_KEY_DOWN:
             directionX = 1;
             HeroRotation = 90;
             break;
-        case GLFW_KEY_DOWN:
+        case GLFW_KEY_RIGHT:
             directionY = -1;
             HeroRotation = 180;
-            break;
-        case GLFW_KEY_RIGHT:
-            directionX = -1;
-            HeroRotation = 270;
             break;
         default:
             break;
@@ -145,7 +145,7 @@ void MazeLevel::init()
     Planes.clear();
 
     HeroRotation = 0;
-    CubeSize = 3;
+    CubeSize = 2;
 
     for (unsigned int i = 0; i < mapX; i++)
     {
@@ -174,12 +174,12 @@ void MazeLevel::init()
 
             if (mazeMap[i][j] != AIR)
             {//FLOOR
-                pos -= glm::vec3(0.0f, CubeSize, 0.0f);
+                pos -= glm::vec3(0.0f, CubeSize + 0.01f, 0.0f);
                 Plane plane(pos, size, ResourceManager::GetTexture("floor"), ResourceManager::GetTexture("floorspec"));
                 this->Planes.push_back(plane);
             }
         }
-        this->Lights.emplace_back(CubeSize * float(i), CubeSize * 2.0f, i%2 == 0 ? CubeSize * 1.0f/4 * float(mapY) : CubeSize * 3.0f/4 * float(mapY) );
+        this->Lights.emplace_back(CubeSize * float(i), CubeSize * 5.0f, i%2 == 0 ? CubeSize * 1.0f/4 * float(mapY) : CubeSize * 3.0f/4 * float(mapY) );
     }
 
 }

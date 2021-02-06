@@ -45,13 +45,12 @@ void CubeRenderer::init() {
             0.5f,  0.5f,  0.5f,  1.0f,  0.0f,  0.0f,  1.0f,  1.0f,
             0.5f, -0.5f,  0.5f,  1.0f,  0.0f,  0.0f,  1.0f,  0.0f,
 
-//            for now we don't need the bottom part of the cube
-//            -0.5f, -0.5f, -0.5f,  0.0f, -1.0f,  0.0f,  0.0f,  1.0f,
-//            0.5f, -0.5f, -0.5f,  0.0f, -1.0f,  0.0f,  1.0f,  1.0f,
-//            0.5f, -0.5f,  0.5f,  0.0f, -1.0f,  0.0f,  1.0f,  0.0f,
-//            0.5f, -0.5f,  0.5f,  0.0f, -1.0f,  0.0f,  1.0f,  0.0f,
-//            -0.5f, -0.5f,  0.5f,  0.0f, -1.0f,  0.0f,  0.0f,  0.0f,
-//            -0.5f, -0.5f, -0.5f,  0.0f, -1.0f,  0.0f,  0.0f,  1.0f,
+            -0.5f, -0.5f, -0.5f,  0.0f, -1.0f,  0.0f,  0.0f,  1.0f,
+            0.5f, -0.5f, -0.5f,  0.0f, -1.0f,  0.0f,  1.0f,  1.0f,
+            0.5f, -0.5f,  0.5f,  0.0f, -1.0f,  0.0f,  1.0f,  0.0f,
+            0.5f, -0.5f,  0.5f,  0.0f, -1.0f,  0.0f,  1.0f,  0.0f,
+            -0.5f, -0.5f,  0.5f,  0.0f, -1.0f,  0.0f,  0.0f,  0.0f,
+            -0.5f, -0.5f, -0.5f,  0.0f, -1.0f,  0.0f,  0.0f,  1.0f,
 
             -0.5f,  0.5f, -0.5f,  0.0f,  1.0f,  0.0f,  0.0f,  1.0f,
             0.5f,  0.5f,  0.5f,  0.0f,  1.0f,  0.0f,  1.0f,  0.0f,
@@ -83,7 +82,7 @@ void CubeRenderer::init() {
     glBindVertexArray(0);
 }
 
-void CubeRenderer::Draw(std::vector<glm::vec3> pointLightPositions, Texture2D diffuse, Texture2D specular,
+void CubeRenderer::Draw(std::vector<glm::vec3> &pointLightPositions, Texture2D diffuse, Texture2D specular,
                         glm::vec3 position, glm::vec3 size, float rotation, glm::vec3 color, bool alpha) {
     glActiveTexture(GL_TEXTURE0);
     diffuse.Bind();
@@ -92,7 +91,7 @@ void CubeRenderer::Draw(std::vector<glm::vec3> pointLightPositions, Texture2D di
     specular.Bind();
 
     this->shader.use();
-    if(alpha) //current setting for transparency of the goal cube, TODO possible new non-cube goal model?
+    if(alpha) //current setting for transparency of the goal cube
         this->shader.setFloat("alfa", 0.7);
     else
         this->shader.setFloat("alfa", 1.0);

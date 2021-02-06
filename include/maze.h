@@ -6,6 +6,8 @@
 #include "resource_manager.h"
 #include "maze_level.h"
 #include "RendererSkyBox.h"
+#include "model_renderer_hero.h"
+#include "white_box_renderer.h"
 
 
 class Maze

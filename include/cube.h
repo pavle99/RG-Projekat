@@ -17,7 +17,7 @@ public:
     Cube();
     Cube(glm::vec3 pos, glm::vec3 size, Texture2D diffuse, Texture2D specular,glm::vec3 color = glm::vec3(1.0f), bool alpha = false);
 
-    virtual void Draw(CubeRenderer &renderer, std::vector<glm::vec3> lightPositions);
+    virtual void Draw(CubeRenderer &renderer, std::vector<glm::vec3> &lightPositions);
 };
 
 #endif //PROJECT_BASE_CUBE_H

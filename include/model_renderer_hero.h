@@ -13,7 +13,7 @@ public:
     ModelRendererHero(Shader shader, Camera& camera);
     ~ModelRendererHero();
 
-    void Draw(Model model, glm::vec3 position, glm::vec3 size, glm::vec3 rotation, float angle);
+    void Draw(Model model, std::vector<glm::vec3> &pointLightPositions, glm::vec3 position, glm::vec3 size, glm::vec3 rotation, float angle);
 private:
     Shader shader;
     Camera& camera;

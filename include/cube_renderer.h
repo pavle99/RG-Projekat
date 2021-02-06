@@ -12,7 +12,7 @@ public:
     CubeRenderer(Shader shader, Camera& camera);
     ~CubeRenderer();
 
-    void Draw(std::vector<glm::vec3> pointLightPositions, Texture2D diffuse, Texture2D specular, glm::vec3 position,
+    void Draw(std::vector<glm::vec3> &pointLightPositions, Texture2D diffuse, Texture2D specular, glm::vec3 position,
               glm::vec3 size = glm::vec3(1.0f, 1.0f, 1.0f),float rotate = 0.0f,
               glm::vec3 color = glm::vec3(1.0f), bool alpha = false);
 

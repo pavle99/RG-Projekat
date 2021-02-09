@@ -21,12 +21,12 @@ void MazeLevel::Load(const char *file)
         for (unsigned int i = 0; i < mapX; i++)
         {
             this->mazeMap[i].resize(mapY);
-            for (unsigned int j = 0; j < mapY; j++)
+            for (unsigned int j = 1; j <= mapY; j++)
             {
-                mapFile >> mazeMap[i][j];
+                mapFile >> mazeMap[i][mapY - j];
             }
         }
-        if (mapX > 0 && mapY > 0) //(if) is not needed if correct input (file)
+        if (mapX > 0 && mapY > 0)
             this->init();
     }
 

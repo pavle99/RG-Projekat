@@ -79,14 +79,15 @@ void Maze::init()
     unsigned int skyBoxID = ResourceManager::loadCubemap(faces);
     skybox_renderer->set_cube_map_texture_id(skyBoxID);
 
-    MazeLevel first, second;
+    MazeLevel first, second, third;
 
     first.Load("resources/levels/1.txt");
     second.Load("resources/levels/2.txt");
-    //TODO add more levels
+    third.Load("resources/levels/3.txt");
 
     this->Levels.push_back(first);
     this->Levels.push_back(second);
+    this->Levels.push_back(third);
 
 }
 //moving the hero
@@ -136,6 +137,6 @@ void Maze::Draw(){
     for(glm::vec3 lightPos : Levels[currentLevel].Lights)
         white_box_renderer->Draw(lightPos);
 
-    //FIXME SKYBOX NOT RENDERING PROPERLY
+    //FIXME SKYBOX NOT RENDERING PROPERLY!!!!!
     skybox_renderer->Draw();
 }

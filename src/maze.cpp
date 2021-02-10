@@ -67,8 +67,8 @@ void Maze::init()
 
     std::vector<std::string> faces
             {
-                    "resources/textures/Yokohama2/posx.jpg",
                     "resources/textures/Yokohama2/negx.jpg",
+                    "resources/textures/Yokohama2/posx.jpg",
                     "resources/textures/Yokohama2/posy.jpg",
                     "resources/textures/Yokohama2/negy.jpg",
                     "resources/textures/Yokohama2/posz.jpg",

@@ -90,32 +90,38 @@ void Maze::init()
     this->Levels.push_back(third);
 
 }
+
 //moving the hero
-void Maze::Move(int direction) {
+void Maze::Move(int direction)
+{
 
     Levels[currentLevel].Move(direction);
 
-    if(Levels[currentLevel].IsComplete() && currentLevel + 1 < (int)Levels.size())
+    if (Levels[currentLevel].IsComplete() && currentLevel + 1 < (int) Levels.size())
         currentLevel++;
 
 }
+
 //camera movement
 void Maze::ProcessInput(float delta_time, Camera_Movement direction)
 {
     this->camera.ProcessKeyboard(direction, delta_time);
 }
 
-void Maze::ProcessMouseMovement(float xoffset,float yoffset){
+void Maze::ProcessMouseMovement(float xoffset, float yoffset)
+{
     this->camera.ProcessMouseMovement(xoffset, yoffset);
 }
 
-void Maze::ProcessScroll(float yoffset){
+void Maze::ProcessScroll(float yoffset)
+{
     this->camera.ProcessMouseScroll(yoffset);
 }
 
-void Maze::Draw(){
+void Maze::Draw()
+{
 
-    if(Levels[currentLevel].IsComplete() && currentLevel + 1 < (int)Levels.size())
+    if (Levels[currentLevel].IsComplete() && currentLevel + 1 < (int) Levels.size())
         currentLevel++;
 
     //Drawing the map of the level
@@ -124,19 +130,18 @@ void Maze::Draw(){
 
     //Drawing the goal
     cube_renderer->Draw(Levels[currentLevel].Lights, ResourceManager::GetTexture("goal"),
-                        ResourceManager::GetTexture("goalspec"),Levels[currentLevel].GoalPos,
-                        glm::vec3(Levels[currentLevel].CubeSize/2), (float)glfwGetTime()*15,
+                        ResourceManager::GetTexture("goalspec"), Levels[currentLevel].GoalPos,
+                        glm::vec3(Levels[currentLevel].CubeSize / 2), (float) glfwGetTime() * 15,
                         glm::vec3(1.0f), true);
 
     //Drawing the hero model
     model_renderer->Draw(ResourceManager::GetModel("hero"), Levels[currentLevel].Lights,
-                         Levels[currentLevel].HeroPos,glm::vec3(Levels[currentLevel].CubeSize/5.0),
+                         Levels[currentLevel].HeroPos, glm::vec3(Levels[currentLevel].CubeSize / 5.0),
                          glm::vec3(0.0f, 1.0f, 0.0f), Levels[currentLevel].HeroRotation);
 
     //Drawing light sources
-    for(glm::vec3 lightPos : Levels[currentLevel].Lights)
+    for (glm::vec3 lightPos : Levels[currentLevel].Lights)
         white_box_renderer->Draw(lightPos);
 
-    //FIXME SKYBOX NOT RENDERING PROPERLY!!!!!
     skybox_renderer->Draw();
 }

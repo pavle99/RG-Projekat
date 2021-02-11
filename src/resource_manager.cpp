@@ -16,7 +16,7 @@
 // Instantiate static variables
 std::map<std::string, Texture2D>    ResourceManager::Textures;
 std::map<std::string, Shader>       ResourceManager::Shaders;
-std::map<std::string, Model*>        ResourceManager::Models;
+std::map<std::string, Model *>        ResourceManager::Models;
 
 Model ResourceManager::LoadModel(std::string const &path, std::string name)
 {

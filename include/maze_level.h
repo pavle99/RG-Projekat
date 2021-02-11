@@ -57,6 +57,7 @@ private:
     //maze dimensions
     unsigned int mapX;
     unsigned int mapY;
+
     //initializing the level's structure
     void init();
 

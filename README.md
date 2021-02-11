@@ -1,11 +1,25 @@
-# project_base
-Prazan projekat sa pratećim bibliotekama koje koristimo na času. 
+# Maze
 
-# Uputstvo
-1. `git clone https://github.com/matf-racunarska-grafika/project_base.git`
-2. CLion -> Open -> path/to/my/project_base
-3. Main se nalazi u src/main.cpp
-4. Cpp fajlovi idu u src folder
-5. Zaglavlja (h i hpp) fajlovi idu u include
-6. Šejderi idu u folder shaders. `Vertex shader` ima ekstenziju `.vs`, `fragment shader` ima ekstenziju `.fs`
-7. ALT+SHIFT+F10 -> project_base -> run
+## Description
+This game represents a project done for the course "Computer Graphics", 3rd year of Computer science, Faculty of Mathematics, Belgrade
+
+It was written using C++ and the OpenGL 3.3 specification
+
+Students that worked on this project:
+- [Pavle Cvejović](https://github.com/pavle99)
+- [Viktor Novaković](https://github.com/vita-ride)
+
+## Gameplay
+The goal of this game is to move through the labyrinth, reach the end point and progress through next levels.
+
+## Controls
+| Key | Description |
+| :---  | :--- |
+| ```Left``` , ```Right```, ```Up```, ```Down``` | Moving the hero |
+| ```W``` , ```A```, ```S```, ```D``` | Moving the camera |
+| ```L``` | Locking the camera |
+| ```R``` | Restarting the level |
+| ```Mouse left/right/up/down``` | Changing the camera angle |
+| ```Mouse scroll``` | Zooming the camera |
+| ```F1``` | Debug screen |
+| ```ESC``` | Exiting the game |

@@ -19,7 +19,7 @@ public:
 
     void ProcessInput(float delta_time, Camera_Movement direction);
 
-    void ProcessMouseMovement(float xoffset,float yoffset);
+    void ProcessMouseMovement(float xoffset, float yoffset);
 
     void ProcessScroll(float yoffset);
 

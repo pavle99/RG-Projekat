@@ -17,7 +17,7 @@ void RendererSkyBox::Draw()
     glDepthFunc(GL_LEQUAL);
     this->shader.use();
     glm::mat4 view = glm::mat4(glm::mat3(this->camera.GetViewMatrix()));
-    glm::mat4 projection = glm::perspective(glm::radians(this->camera.Zoom), 800.0f/600.0f, 0.1f, 100.0f);
+    glm::mat4 projection = glm::perspective(glm::radians(this->camera.Zoom), 800.0f / 600.0f, 0.1f, 100.0f);
     this->shader.setMat4("view", view);
     this->shader.setMat4("projection", projection);
     //draw skybox cube

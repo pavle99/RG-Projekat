@@ -7,7 +7,8 @@
 #include "texture.h"
 #include "cube_renderer.h"
 
-class Cube {
+class Cube
+{
 public:
     glm::vec3 Position, Size, Color;
     bool alpha;
@@ -15,7 +16,9 @@ public:
     Texture2D specular;
 
     Cube();
-    Cube(glm::vec3 pos, glm::vec3 size, Texture2D diffuse, Texture2D specular,glm::vec3 color = glm::vec3(1.0f), bool alpha = false);
+
+    Cube(glm::vec3 pos, glm::vec3 size, Texture2D diffuse, Texture2D specular, glm::vec3 color = glm::vec3(1.0f),
+         bool alpha = false);
 
     virtual void Draw(CubeRenderer &renderer, std::vector<glm::vec3> &lightPositions);
 };

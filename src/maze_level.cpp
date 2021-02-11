@@ -179,7 +179,8 @@ void MazeLevel::init()
                 this->Planes.push_back(plane);
             }
         }
-        this->Lights.emplace_back(CubeSize * float(i), CubeSize * 5.0f, i%2 == 0 ? CubeSize * 1.0f/4 * float(mapY) : CubeSize * 3.0f/4 * float(mapY) );
+        this->Lights.emplace_back(CubeSize * float(i), CubeSize * 5.0f,
+                                  i % 2 == 0 ? CubeSize * 1.0f / 4 * float(mapY) : CubeSize * 3.0f / 4 * float(mapY));
     }
 
 }

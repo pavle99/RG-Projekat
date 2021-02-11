@@ -7,7 +7,6 @@ Plane::Plane()
           alpha(false),
           diffuse(),
           specular()
-
 {}
 
 Plane::Plane(glm::vec3 pos, glm::vec3 size, Texture2D diffuse, Texture2D specular, glm::vec3 color, bool alpha)
@@ -17,7 +16,6 @@ Plane::Plane(glm::vec3 pos, glm::vec3 size, Texture2D diffuse, Texture2D specula
           alpha(alpha),
           diffuse(diffuse),
           specular(specular)
-
 {}
 
 void Plane::Draw(PlaneRenderer &renderer, std::vector<glm::vec3> &lightPositions)

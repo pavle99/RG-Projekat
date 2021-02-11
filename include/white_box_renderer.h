@@ -5,16 +5,18 @@
 #include <learnopengl/camera.h>
 
 //class that renders all things cube-shaped
-class WhiteBoxRenderer {
+class WhiteBoxRenderer
+{
 public:
-    WhiteBoxRenderer(Shader shader, Camera& camera);
+    WhiteBoxRenderer(Shader shader, Camera &camera);
+
     ~WhiteBoxRenderer();
 
     void Draw(glm::vec3 position, glm::vec3 size = glm::vec3(1.0f, 1.0f, 1.0f), float rotate = 0.0f,
               glm::vec3 color = glm::vec3(1.0f));
 
 private:
-    Shader  shader;
+    Shader shader;
     Camera &camera;
     unsigned int VAO;
 

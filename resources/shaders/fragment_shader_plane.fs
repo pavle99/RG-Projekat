@@ -8,6 +8,15 @@ struct Material
     float shininess;
 };
 
+struct SunLight
+{
+    vec3 direction;
+
+    vec3 ambient;
+    vec3 diffuse;
+    vec3 specular;
+};
+
 struct PointLight
 {
     vec3 position;
@@ -33,7 +42,9 @@ uniform vec3 defaultColor;
 uniform float alfa;
 uniform PointLight pointLights[MAX_NUMBER_OF_LIGHTS];
 uniform Material material;
+uniform SunLight sunLight;
 
+vec3 CalcSunLight(SunLight light, vec3 normal, vec3 fragPos, vec3 viewDir);
 
 vec3 CalcPointLight(PointLight light, vec3 normal, vec3 fragPos, vec3 viewDir);
 
@@ -45,6 +56,9 @@ void main()
 
     for(int i = 0; i < number_of_lights; i++)
         result += CalcPointLight(pointLights[i], norm, FragPos, viewDir);
+
+    result += CalcSunLight(sunLight, norm, FragPos, viewDir);
+
     if (gl_FrontFacing)
         FragColor = vec4(result, 1.0) * vec4(defaultColor, alfa);
     else
@@ -70,4 +84,20 @@ vec3 CalcPointLight(PointLight light, vec3 normal, vec3 fragPos, vec3 viewDir)
     diffuse *= attenuation;
     specular *= attenuation;
     return (ambient + diffuse + specular);
+}
+
+vec3 CalcSunLight(SunLight light, vec3 normal, vec3 fragPos, vec3 viewDir){
+    vec3 lightDir = normalize(-light.direction);
+    // diffuse
+    float diff = max(dot(normal, lightDir), 0.0);
+    // specular
+    vec3 reflectDir = reflect(-lightDir, normal);
+    float spec = pow(max(dot(viewDir, reflectDir), 0.0), material.shininess);
+    // combine ambient, diffuse and specular
+    vec3 ambient = light.ambient * vec3(texture(material.diffuse, TexCoords));
+    vec3 diffuse = light.diffuse * diff * vec3(texture(material.diffuse, TexCoords));
+    vec3 specular = light.specular * spec * vec3(texture(material.specular, TexCoords));
+
+    return (ambient + diffuse + specular);
+
 }

@@ -83,6 +83,11 @@ void PlaneRenderer::Draw(std::vector<glm::vec3> pointLightPositions, Texture2D d
         this->shader.setFloat((tmp + ".quadratic"), 0.032);
     }
 
+    this->shader.setVec3("sunLight.direction", -1.0f, -1.0f, 0.0f);
+    this->shader.setVec3("sunLight.diffuse", 0.2f, 0.2f, 0.2f);
+    this->shader.setVec3("sunLight.specular", 0.4f, 0.4f, 0.4f);
+    this->shader.setVec3("sunLight.ambient", 0.03f, 0.03f, 0.03f);
+
     glm::mat4 model = glm::mat4(1.0f);
     glm::mat4 view = glm::mat4(1.0f);
     glm::mat4 projection = glm::mat4(1.0f);

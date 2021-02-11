@@ -25,11 +25,14 @@ public:
 
     void Move(int direction);
 
+    void Reload();
+
     void Draw();
 
 private:
     unsigned int width, height;
     Camera camera;
+    std::vector<std::string> FilePaths;
     std::vector<MazeLevel> Levels;
     int currentLevel;
 

@@ -54,7 +54,7 @@ void Maze::init()
     ResourceManager::LoadTexture("resources/textures/goal.png", true, "goalspec");
 
     //load models
-    ResourceManager::LoadModel("resources/objects/amongus/amongus.obj", "hero");
+    ResourceManager::LoadModel("resources/objects/hero/hero_obj_mtl/cartoon_hunter male.obj", "hero");
 
 
     // +X (right)
@@ -81,13 +81,20 @@ void Maze::init()
 
     MazeLevel first, second, third;
 
-    first.Load("resources/levels/1.txt");
-    second.Load("resources/levels/2.txt");
-    third.Load("resources/levels/3.txt");
+//    first.Load("resources/levels/1.txt");
+//    second.Load("resources/levels/2.txt");
+//    third.Load("resources/levels/3.txt");
+
+    this->FilePaths.emplace_back("resources/levels/1.txt");
+    this->FilePaths.emplace_back("resources/levels/2.txt");
+    this->FilePaths.emplace_back("resources/levels/3.txt");
 
     this->Levels.push_back(first);
     this->Levels.push_back(second);
     this->Levels.push_back(third);
+
+    for(size_t i = 0; i < this->Levels.size(); i++)
+        this->Levels[i].Load(this->FilePaths[i].c_str());
 
 }
 
@@ -101,6 +108,13 @@ void Maze::Move(int direction)
         currentLevel++;
 
 }
+
+//reloading current level
+void Maze::Reload(){
+    Levels[currentLevel].Load(FilePaths[currentLevel].c_str());
+
+}
+
 
 //camera movement
 void Maze::ProcessInput(float delta_time, Camera_Movement direction)
@@ -136,8 +150,9 @@ void Maze::Draw()
 
     //Drawing the hero model
     model_renderer->Draw(ResourceManager::GetModel("hero"), Levels[currentLevel].Lights,
-                         Levels[currentLevel].HeroPos, glm::vec3(Levels[currentLevel].CubeSize / 5.0),
-                         glm::vec3(0.0f, 1.0f, 0.0f), Levels[currentLevel].HeroRotation);
+                         Levels[currentLevel].HeroPos - glm::vec3(0.0f, 0.45*Levels[currentLevel].CubeSize, 0.0f),
+                         glm::vec3(Levels[currentLevel].CubeSize / 25.0),glm::vec3(0.0f, 1.0f, 0.0f),
+                         Levels[currentLevel].HeroRotation);
 
     //Drawing light sources
     for (glm::vec3 lightPos : Levels[currentLevel].Lights)

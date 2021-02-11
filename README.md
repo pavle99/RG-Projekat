@@ -21,5 +21,4 @@ The goal of this game is to move through the labyrinth, reach the end point and 
 | ```R``` | Restarting the level |
 | ```Mouse left/right/up/down``` | Changing the camera angle |
 | ```Mouse scroll``` | Zooming the camera |
-| ```F1``` | Debug screen |
 | ```ESC``` | Exiting the game |

@@ -1,0 +1,66 @@
+# Blender MTL File: 'cartoon_survivor male.blend'
+# Material Count: 5
+
+newmtl PackedMaterial0
+Ns 512.000000
+Ka 1.000000 1.000000 1.000000
+Kd 1.000000 1.000000 1.000000
+Ks 1.000000 1.000000 1.000000
+Ke 0.0 0.0 0.0
+Ni 1.000000
+d 1.000000
+illum 2
+map_Kd cartoon_hunter\\cartoon_hunter_Packed0_Diffuse.png
+map_Ks cartoon_hunter\\cartoon_hunter_Packed0_Specular.png
+map_d cartoon_hunter\\cartoon_hunter_Packed0_Opacity.png
+
+newmtl PackedMaterial1
+Ns 512.000000
+Ka 1.000000 1.000000 1.000000
+Kd 1.000000 1.000000 1.000000
+Ks 1.000000 1.000000 1.000000
+Ke 0.0 0.0 0.0
+Ni 1.000000
+d 1.000000
+illum 2
+map_Kd cartoon_hunter\\cartoon_hunter_Packed1_Diffuse.png
+map_Ks cartoon_hunter\\cartoon_hunter_Packed1_Specular.png
+map_d cartoon_hunter\\cartoon_hunter_Packed1_Opacity.png
+
+newmtl Shotgun_Texture
+Ns 0.000000
+Ka 1.000000 1.000000 1.000000
+Kd 0.640000 0.640000 0.640000
+Ks 0.800000 0.800000 0.800000
+Ke 0.0 0.0 0.0
+Ni 1.000000
+d 1.000000
+illum 2
+map_Bump shotgun_textures\\Sg_normals.png
+map_Kd shotgun_textures\\Sg_Diffuse.png
+map_Ks shotgun_textures\\Sg_Spec.png
+
+newmtl belt
+Ns 134.349166
+Ka 1.000000 1.000000 1.000000
+Kd 1.000000 1.000000 1.000000
+Ks 0.290909 0.290909 0.290909
+Ke 0.0 0.0 0.0
+Ni 1.450000
+d 1.000000
+illum 2
+map_Kd shotgun_textures\\5751321.jpg
+
+newmtl hook
+Ns 225.000000
+Ka 1.000000 1.000000 1.000000
+Kd 1.000000 1.000000 1.000000
+Ks 0.500000 0.500000 0.500000
+Ke 0.0 0.0 0.0
+Ni 1.450000
+d 1.000000
+illum 2
+map_Bump shotgun_textures\\MetalSpottyDiscoloration001_NRM_3K_METALNESS.jpg
+map_Kd shotgun_textures\\MetalSpottyDiscoloration001_COL_3K_METALNESS.jpg
+map_Ns shotgun_textures\\MetalSpottyDiscoloration001_ROUGHNESS_3K_METALNESS.jpg
+refl shotgun_textures\\MetalSpottyDiscoloration001_METALNESS_3K_METALNESS.jpg

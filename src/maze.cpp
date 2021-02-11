@@ -54,7 +54,7 @@ void Maze::init()
     ResourceManager::LoadTexture("resources/textures/goal.png", true, "goalspec");
 
     //load models
-    ResourceManager::LoadModel("resources/objects/backpack/backpack.obj", "hero");
+    ResourceManager::LoadModel("resources/objects/amongus/amongus.obj", "hero");
 
 
     // +X (right)
